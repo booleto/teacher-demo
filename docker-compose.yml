@@ -1,0 +1,15 @@
+name: tophat-teacherdemo
+
+services:
+  # MongoDB
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    networks:
+      - internal-network-1
+
+networks:
+  internal-network-1:
+    driver: bridge
