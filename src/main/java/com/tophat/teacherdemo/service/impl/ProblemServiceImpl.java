@@ -2,9 +2,10 @@ package com.tophat.teacherdemo.service.impl;
 
 import com.tophat.teacherdemo.controller.vo.ProblemCreateRequest;
 import com.tophat.teacherdemo.entity.*;
+import com.tophat.teacherdemo.entity.answer.Answer;
 import com.tophat.teacherdemo.repository.ProblemRepository;
 import com.tophat.teacherdemo.service.ProblemService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProblemServiceImpl implements ProblemService {
 
     private final ProblemRepository problemRepository;

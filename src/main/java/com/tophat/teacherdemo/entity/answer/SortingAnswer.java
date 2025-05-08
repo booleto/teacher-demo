@@ -1,4 +1,4 @@
-package com.tophat.teacherdemo.entity;
+package com.tophat.teacherdemo.entity.answer;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.Data;

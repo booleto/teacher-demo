@@ -1,5 +1,6 @@
 package com.tophat.teacherdemo.entity;
 
+import com.tophat.teacherdemo.entity.answer.Answer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

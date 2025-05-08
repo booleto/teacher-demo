@@ -1,6 +1,6 @@
 package com.tophat.teacherdemo.controller.vo;
 
-import com.tophat.teacherdemo.entity.Answer;
+import com.tophat.teacherdemo.entity.answer.Answer;
 import com.tophat.teacherdemo.entity.Problem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
