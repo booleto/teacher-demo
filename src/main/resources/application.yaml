@@ -1,0 +1,8 @@
+server:
+  port: ${SERVER_PORT:8081}
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://${MONGO_HOST:localhost:27017}
+      database: teacherdemo
