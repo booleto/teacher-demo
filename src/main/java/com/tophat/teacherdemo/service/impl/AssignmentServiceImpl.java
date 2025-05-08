@@ -78,6 +78,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 
 
     private void updateProblemList(Assignment assignment, List<ObjectId> problemIds) {
+        // TODO: this snippet will be bugged if problemIds.size() == 0
         List<Problem<Answer>> foundProblems = problemRepository.findAllById(problemIds);
         Set<ObjectId> foundIds = foundProblems.stream()
                 .map(Problem::getId)
