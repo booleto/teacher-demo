@@ -54,4 +54,19 @@ public class SubmissionServiceImpl implements SubmissionService {
     public void deleteSubmission(ObjectId id) {
         submissionRepository.deleteById(id);
     }
+
+
+    @Override
+    public Optional<Submission> turnInSubmission(ObjectId id) {
+        Optional<Submission> submissionSearch = getSubmissionById(id);
+        if (submissionSearch.isEmpty()) return Optional.empty();
+        Submission submission = submissionSearch.get();
+
+        if (!submission.getStatus().equals(Submission.Status.DRAFT)) {
+            throw new IllegalArgumentException("Submission status is not DRAFT, cannot turn in");
+        }
+
+        submission.setStatus(Submission.Status.TURNED_IN);
+        return Optional.of(submissionRepository.save(submission));
+    }
 }

@@ -6,6 +6,6 @@ import org.bson.types.ObjectId;
 
 @Data
 public class SubmissionItem {
-    Answer submittedAnswer;
+    Answer answer;
     ObjectId problemId;
 }

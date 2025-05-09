@@ -27,12 +27,12 @@ public class SubmissionController {
     }
 
     @PostMapping
-    public ResponseEntity<Submission> createSubmission(@RequestBody SubmissionRequest submissionRequest) {
+    public ResponseEntity<Submission> createDraftSubmission(@RequestBody SubmissionRequest submissionRequest) {
         return ResponseEntity.ok(submissionService.createDraftSubmission(submissionRequest));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Submission> updateSubmission(@RequestBody SubmissionRequest submissionRequest, @PathVariable ObjectId id) {
+    public ResponseEntity<Submission> updateDraftSubmission(@RequestBody SubmissionRequest submissionRequest, @PathVariable ObjectId id) {
         Optional<Submission> updatedSubmission = submissionService.updateDraftSubmission(id, submissionRequest);
         return updatedSubmission.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -42,5 +42,12 @@ public class SubmissionController {
     public ResponseEntity<Problem<Answer>> deleteSubmission(@PathVariable ObjectId id) {
         submissionService.deleteSubmission(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<Submission> turnInSubmission(@PathVariable ObjectId id) {
+        Optional<Submission> turnedIn = submissionService.turnInSubmission(id);
+        return turnedIn.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

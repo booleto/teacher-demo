@@ -11,4 +11,5 @@ public interface SubmissionService {
     Submission createDraftSubmission(SubmissionRequest submission);
     Optional<Submission> updateDraftSubmission(ObjectId id, SubmissionRequest submission);
     void deleteSubmission(ObjectId id);
+    Optional<Submission> turnInSubmission(ObjectId id);
 }
