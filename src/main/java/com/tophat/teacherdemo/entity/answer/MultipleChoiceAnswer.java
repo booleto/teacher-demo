@@ -1,10 +1,15 @@
 package com.tophat.teacherdemo.entity.answer;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@JsonTypeName("MULTIPLE_CHOICE")
+@Document
+@TypeAlias("MULTIPLE_CHOICE")
 @Data
+@AllArgsConstructor
 public class MultipleChoiceAnswer implements Answer {
     private int choice;
 

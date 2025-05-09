@@ -1,11 +1,11 @@
 package com.tophat.teacherdemo.entity;
 
-import com.tophat.teacherdemo.entity.answer.Answer;
+import com.tophat.teacherdemo.controller.vo.answer.AnswerDTO;
 import lombok.Data;
 import org.bson.types.ObjectId;
 
 @Data
 public class SubmissionItem {
-    Answer answer;
+    AnswerDTO answer;
     ObjectId problemId;
 }

@@ -1,6 +1,6 @@
 package com.tophat.teacherdemo.controller.vo;
 
-import com.tophat.teacherdemo.entity.answer.Answer;
+import com.tophat.teacherdemo.controller.vo.answer.AnswerDTO;
 import com.tophat.teacherdemo.entity.Problem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +17,7 @@ public class ProblemCreateRequest {
     private String description;
     private String questionText;
     private Problem.Type type;
-    private Answer correctAnswer;
+    private AnswerDTO correctAnswer;
     private List<String> choices;
     private Map<String, Object> metadata;
 }

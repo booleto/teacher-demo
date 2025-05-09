@@ -37,7 +37,7 @@ public class ProblemServiceImpl implements ProblemService {
                 .description(problemRequest.getDescription())
                 .questionText(problemRequest.getQuestionText())
                 .type(problemRequest.getType())
-                .correctAnswer(problemRequest.getCorrectAnswer())
+                .correctAnswer(problemRequest.getCorrectAnswer().toAnswer())
                 .choices(problemRequest.getChoices())
                 .build();
 
@@ -60,7 +60,7 @@ public class ProblemServiceImpl implements ProblemService {
         // Change correct answer (same question type only)
         Optional.ofNullable(problemRequest.getCorrectAnswer()).ifPresent(answer -> {
             if (problemRequest.getType().equals(problem.getType())) {
-                problem.setCorrectAnswer(answer);
+                problem.setCorrectAnswer(answer.toAnswer());
             }
         });
 
@@ -70,7 +70,7 @@ public class ProblemServiceImpl implements ProblemService {
                 throw new IllegalArgumentException("Changing Problem Type, but new Correct answer not found");
             }
 
-            Answer correctAnswer = problemRequest.getCorrectAnswer();
+            Answer correctAnswer = problemRequest.getCorrectAnswer().toAnswer();
             problem.setCorrectAnswer(correctAnswer);
         });
 
