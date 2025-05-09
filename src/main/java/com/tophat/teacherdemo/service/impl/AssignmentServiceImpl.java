@@ -1,13 +1,13 @@
 package com.tophat.teacherdemo.service.impl;
 
 import com.tophat.teacherdemo.controller.vo.AssignmentCreateRequest;
-import com.tophat.teacherdemo.entity.Answer;
+import com.tophat.teacherdemo.entity.answer.Answer;
 import com.tophat.teacherdemo.entity.Assignment;
 import com.tophat.teacherdemo.entity.Problem;
 import com.tophat.teacherdemo.repository.AssignmentRepository;
 import com.tophat.teacherdemo.repository.ProblemRepository;
 import com.tophat.teacherdemo.service.AssignmentService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AssignmentServiceImpl implements AssignmentService {
     private final AssignmentRepository assignmentRepository;
     private final ProblemRepository problemRepository;
@@ -78,6 +78,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 
 
     private void updateProblemList(Assignment assignment, List<ObjectId> problemIds) {
+        // TODO: this snippet will be bugged if problemIds.size() == 0
         List<Problem<Answer>> foundProblems = problemRepository.findAllById(problemIds);
         Set<ObjectId> foundIds = foundProblems.stream()
                 .map(Problem::getId)

@@ -1,10 +1,15 @@
-package com.tophat.teacherdemo.entity;
+package com.tophat.teacherdemo.entity.answer;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@JsonTypeName("KEYWORD")
+@Document
+@TypeAlias("KEYWORD")
 @Data
+@AllArgsConstructor
 public class KeywordAnswer implements Answer {
     private String keyword;
 

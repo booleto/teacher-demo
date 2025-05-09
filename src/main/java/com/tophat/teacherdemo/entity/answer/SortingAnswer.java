@@ -1,13 +1,17 @@
-package com.tophat.teacherdemo.entity;
+package com.tophat.teacherdemo.entity.answer;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.stream.IntStream;
 
-@JsonTypeName("SORTING")
+@Document
+@TypeAlias("SORTING")
 @Data
+@AllArgsConstructor
 public class SortingAnswer implements Answer {
     private List<String> orderedAnswers;
 

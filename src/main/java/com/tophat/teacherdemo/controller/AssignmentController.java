@@ -3,7 +3,7 @@ package com.tophat.teacherdemo.controller;
 import com.tophat.teacherdemo.controller.vo.AssignmentCreateRequest;
 import com.tophat.teacherdemo.entity.Assignment;
 import com.tophat.teacherdemo.service.AssignmentService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/teacherdemo/v0/assignment")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AssignmentController {
     private final AssignmentService assignmentService;
 

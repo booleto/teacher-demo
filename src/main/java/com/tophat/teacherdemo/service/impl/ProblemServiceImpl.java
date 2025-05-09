@@ -2,9 +2,10 @@ package com.tophat.teacherdemo.service.impl;
 
 import com.tophat.teacherdemo.controller.vo.ProblemCreateRequest;
 import com.tophat.teacherdemo.entity.*;
+import com.tophat.teacherdemo.entity.answer.Answer;
 import com.tophat.teacherdemo.repository.ProblemRepository;
 import com.tophat.teacherdemo.service.ProblemService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProblemServiceImpl implements ProblemService {
 
     private final ProblemRepository problemRepository;
@@ -36,7 +37,7 @@ public class ProblemServiceImpl implements ProblemService {
                 .description(problemRequest.getDescription())
                 .questionText(problemRequest.getQuestionText())
                 .type(problemRequest.getType())
-                .correctAnswer(problemRequest.getCorrectAnswer())
+                .correctAnswer(problemRequest.getCorrectAnswer().toAnswer())
                 .choices(problemRequest.getChoices())
                 .build();
 
@@ -59,7 +60,7 @@ public class ProblemServiceImpl implements ProblemService {
         // Change correct answer (same question type only)
         Optional.ofNullable(problemRequest.getCorrectAnswer()).ifPresent(answer -> {
             if (problemRequest.getType().equals(problem.getType())) {
-                problem.setCorrectAnswer(answer);
+                problem.setCorrectAnswer(answer.toAnswer());
             }
         });
 
@@ -69,7 +70,7 @@ public class ProblemServiceImpl implements ProblemService {
                 throw new IllegalArgumentException("Changing Problem Type, but new Correct answer not found");
             }
 
-            Answer correctAnswer = problemRequest.getCorrectAnswer();
+            Answer correctAnswer = problemRequest.getCorrectAnswer().toAnswer();
             problem.setCorrectAnswer(correctAnswer);
         });
 

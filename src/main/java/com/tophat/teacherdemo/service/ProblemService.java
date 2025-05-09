@@ -1,7 +1,7 @@
 package com.tophat.teacherdemo.service;
 
 import com.tophat.teacherdemo.controller.vo.ProblemCreateRequest;
-import com.tophat.teacherdemo.entity.Answer;
+import com.tophat.teacherdemo.entity.answer.Answer;
 import com.tophat.teacherdemo.entity.Problem;
 import org.bson.types.ObjectId;
 
