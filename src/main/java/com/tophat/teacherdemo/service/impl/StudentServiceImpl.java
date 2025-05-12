@@ -1,13 +1,16 @@
 package com.tophat.teacherdemo.service.impl;
 
 import com.tophat.teacherdemo.controller.vo.StudentCreateRequest;
+import com.tophat.teacherdemo.entity.Assignment;
 import com.tophat.teacherdemo.entity.Student;
+import com.tophat.teacherdemo.entity.StudentPendingAssignment;
 import com.tophat.teacherdemo.repository.StudentRepository;
 import com.tophat.teacherdemo.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,5 +50,35 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void deleteStudent(ObjectId id) {
         studentRepository.deleteById(id);
+    }
+
+
+    @Override
+    public void addPendingAssignment(List<ObjectId> studentIds, Assignment assignment) {
+        throwIfStudentNotExist(studentIds);
+
+        studentRepository.addPendingAssignmentById(studentIds, StudentPendingAssignment.builder()
+                .assignmentId(assignment.getId())
+                .title(assignment.getTitle())
+                .description(assignment.getDescription())
+                .deadline(assignment.getSubmissionDeadline())
+                .build()
+        );
+    }
+
+
+    @Override
+    public void removePendingAssignment(List<ObjectId> studentIds, ObjectId assignmentId) {
+        throwIfStudentNotExist(studentIds);
+        studentRepository.removePendingAssignmentById(studentIds, assignmentId);
+    }
+
+
+    private void throwIfStudentNotExist(List<ObjectId> studentIds) {
+        studentIds.parallelStream().forEach(studentId -> {
+            Optional<Student> studentSearch = findStudentById(studentId);
+            if (studentSearch.isEmpty())
+                throw new IllegalArgumentException(String.format("Student with id %s not found", studentId));
+        });
     }
 }

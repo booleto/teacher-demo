@@ -20,5 +20,6 @@ public class AssignmentCreateRequest {
     private Assignment.Status status;
     private Map<String, Object> metadata;
 
+    private List<ObjectId> assignees;
     private List<ObjectId> problemIds;
 }

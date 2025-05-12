@@ -16,5 +16,5 @@ public class Student {
     private ObjectId id;
     private String username;
     private String displayName;
-    private List<ObjectId> pendingAssignments;
+    private List<StudentPendingAssignment> pendingAssignments;
 }

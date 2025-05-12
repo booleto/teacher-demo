@@ -1,5 +1,6 @@
 package com.tophat.teacherdemo.controller;
 
+import com.tophat.teacherdemo.controller.vo.AssignStudentRequest;
 import com.tophat.teacherdemo.controller.vo.AssignmentCreateRequest;
 import com.tophat.teacherdemo.entity.Assignment;
 import com.tophat.teacherdemo.service.AssignmentService;
@@ -39,5 +40,19 @@ public class AssignmentController {
     public ResponseEntity<Void> deleteAssignment(@PathVariable ObjectId id) {
         assignmentService.deleteAssignment(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/{id}/assign")
+    public ResponseEntity<Assignment> addAssignees(@PathVariable ObjectId id, @RequestBody AssignStudentRequest request) {
+        Optional<Assignment> updatedAssignment = assignmentService.addAssignees(id, request.getStudentIds());
+        return updatedAssignment.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PatchMapping("/{id}/unassign")
+    public ResponseEntity<Assignment> removeAssignee(@PathVariable ObjectId id, @RequestBody AssignStudentRequest request) {
+        Optional<Assignment> updatedAssignment = assignmentService.removeAssignees(id, request.getStudentIds());
+        return updatedAssignment.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

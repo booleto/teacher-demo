@@ -27,6 +27,7 @@ public class Assignment {
     private Instant submissionDeadline;
     private Status status;
     private Map<String, Object> metadata;
+    private List<StudentSubmissionStatus> submissionStatus;
 
     @DocumentReference
     private List<Problem<Answer>> problems;
