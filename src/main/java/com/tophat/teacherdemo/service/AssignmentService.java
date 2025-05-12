@@ -12,5 +12,7 @@ public interface AssignmentService {
     Assignment createAssignment(AssignmentCreateRequest assignment);
     List<Assignment> searchAssignment(Assignment assignment);
     Optional<Assignment> updateAssignment(ObjectId id, AssignmentCreateRequest assignmentRequest);
+    Optional<Assignment> addAssignees(ObjectId assignmentId, List<ObjectId> studentIds);
+    Optional<Assignment> removeAssignees(ObjectId assignmentId, List<ObjectId> studentIds);
     void deleteAssignment(ObjectId id);
 }
