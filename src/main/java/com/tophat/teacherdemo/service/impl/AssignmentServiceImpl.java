@@ -1,6 +1,7 @@
 package com.tophat.teacherdemo.service.impl;
 
 import com.tophat.teacherdemo.controller.vo.AssignmentCreateRequest;
+import com.tophat.teacherdemo.controller.vo.AssignmentPublicView;
 import com.tophat.teacherdemo.entity.*;
 import com.tophat.teacherdemo.entity.answer.Answer;
 import com.tophat.teacherdemo.repository.AssignmentRepository;
@@ -29,6 +30,23 @@ public class AssignmentServiceImpl implements AssignmentService {
     @Override
     public Optional<Assignment> getAssignment(ObjectId id) {
         return assignmentRepository.findById(id);
+    }
+
+    @Override
+    public Optional<AssignmentPublicView> getAssignmentPublicView(ObjectId id) {
+        Optional<Assignment> assignmentSearch = assignmentRepository.findById(id);
+        if (assignmentSearch.isEmpty()) return Optional.empty();
+        Assignment assignment = assignmentSearch.get();
+
+        assignment.getProblems().forEach(problem -> problem.setCorrectAnswer(null));
+        AssignmentPublicView publicView = AssignmentPublicView.builder()
+                .id(assignment.getId())
+                .title(assignment.getTitle())
+                .description(assignment.getDescription())
+                .submissionDeadline(assignment.getSubmissionDeadline())
+                .problems(assignment.getProblems())
+                .build();
+        return Optional.of(publicView);
     }
 
     @Override
