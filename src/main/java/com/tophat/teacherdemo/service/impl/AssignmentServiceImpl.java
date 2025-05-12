@@ -1,6 +1,7 @@
 package com.tophat.teacherdemo.service.impl;
 
 import com.tophat.teacherdemo.controller.vo.AssignmentCreateRequest;
+import com.tophat.teacherdemo.controller.vo.AssignmentPublicView;
 import com.tophat.teacherdemo.entity.*;
 import com.tophat.teacherdemo.entity.answer.Answer;
 import com.tophat.teacherdemo.repository.AssignmentRepository;
@@ -29,6 +30,23 @@ public class AssignmentServiceImpl implements AssignmentService {
     @Override
     public Optional<Assignment> getAssignment(ObjectId id) {
         return assignmentRepository.findById(id);
+    }
+
+    @Override
+    public Optional<AssignmentPublicView> getAssignmentPublicView(ObjectId id) {
+        Optional<Assignment> assignmentSearch = assignmentRepository.findById(id);
+        if (assignmentSearch.isEmpty()) return Optional.empty();
+        Assignment assignment = assignmentSearch.get();
+
+        assignment.getProblems().forEach(problem -> problem.setCorrectAnswer(null));
+        AssignmentPublicView publicView = AssignmentPublicView.builder()
+                .id(assignment.getId())
+                .title(assignment.getTitle())
+                .description(assignment.getDescription())
+                .submissionDeadline(assignment.getSubmissionDeadline())
+                .problems(assignment.getProblems())
+                .build();
+        return Optional.of(publicView);
     }
 
     @Override
@@ -153,6 +171,28 @@ public class AssignmentServiceImpl implements AssignmentService {
         studentService.removePendingAssignment(studentIds, assignment.getId());
         assignment.getSubmissionStatus().removeIf(status -> studentIds.contains(status.getStudentId()));
         return Optional.of(assignmentRepository.save(assignment));
+    }
+
+
+    @Transactional
+    public void syncSubmissionStatus(Submission submission) {
+        Optional<Assignment> foundAssignment = getAssignment(submission.getAssignmentId());
+        if (foundAssignment.isEmpty()) throw new IllegalArgumentException(String.format("Assignment with id %s not found" , submission.getAssignmentId()));
+        Assignment assignment = foundAssignment.get();
+
+        assignment.getSubmissionStatus().stream()
+                .filter(status -> status.getStudentId().equals(submission.getStudentId()))
+                .forEach(status -> {
+                        status.setSubmissionId(submission.getSubmissionId());
+                        status.setStatus(
+                                switch (submission.getStatus()) {
+                                    case DRAFT -> StudentSubmissionStatus.Status.UNSUBMITTED;
+                                    case TURNED_IN, GRADED -> StudentSubmissionStatus.Status.TURNED_IN;
+                                    default -> StudentSubmissionStatus.Status.UNSUBMITTED;
+                        });
+                });
+
+        assignmentRepository.save(assignment);
     }
 
 

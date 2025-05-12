@@ -2,6 +2,7 @@ package com.tophat.teacherdemo.controller;
 
 import com.tophat.teacherdemo.controller.vo.AssignStudentRequest;
 import com.tophat.teacherdemo.controller.vo.AssignmentCreateRequest;
+import com.tophat.teacherdemo.controller.vo.AssignmentPublicView;
 import com.tophat.teacherdemo.entity.Assignment;
 import com.tophat.teacherdemo.service.AssignmentService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,13 @@ public class AssignmentController {
     @GetMapping("/{id}")
     public ResponseEntity<Assignment> getAssignmentById(@PathVariable ObjectId id) {
         Optional<Assignment> foundAssignment = assignmentService.getAssignment(id);
+        return foundAssignment.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{id}/display")
+    public ResponseEntity<AssignmentPublicView> getAssignmentPublicView(@PathVariable ObjectId id) {
+        Optional<AssignmentPublicView> foundAssignment = assignmentService.getAssignmentPublicView(id);
         return foundAssignment.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

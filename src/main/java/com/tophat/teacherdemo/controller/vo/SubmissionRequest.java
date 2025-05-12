@@ -1,6 +1,5 @@
 package com.tophat.teacherdemo.controller.vo;
 
-import com.tophat.teacherdemo.entity.SubmissionItem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +14,6 @@ import java.util.Map;
 public class SubmissionRequest {
     private ObjectId studentId;
     private ObjectId assignmentId;
-    private List<SubmissionItem> submissionItems;
+    private List<SubmissionItemDTO> submissionItems;
     private Map<String, Object> metadata;
 }
