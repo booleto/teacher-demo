@@ -62,7 +62,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
     @Override
     public void deleteSubmission(ObjectId id) {
-        submissionRepository.deleteById(id);
+        submissionRepository.deleteByIdIfStatusEquals(id, Submission.Status.DRAFT);
     }
 
 
