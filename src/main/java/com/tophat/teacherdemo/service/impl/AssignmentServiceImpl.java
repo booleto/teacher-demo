@@ -174,6 +174,28 @@ public class AssignmentServiceImpl implements AssignmentService {
     }
 
 
+    @Transactional
+    public void syncSubmissionStatus(Submission submission) {
+        Optional<Assignment> foundAssignment = getAssignment(submission.getAssignmentId());
+        if (foundAssignment.isEmpty()) throw new IllegalArgumentException(String.format("Assignment with id %s not found" , submission.getAssignmentId()));
+        Assignment assignment = foundAssignment.get();
+
+        assignment.getSubmissionStatus().stream()
+                .filter(status -> status.getStudentId().equals(submission.getStudentId()))
+                .forEach(status -> {
+                        status.setSubmissionId(submission.getSubmissionId());
+                        status.setStatus(
+                                switch (submission.getStatus()) {
+                                    case DRAFT -> StudentSubmissionStatus.Status.UNSUBMITTED;
+                                    case TURNED_IN, GRADED -> StudentSubmissionStatus.Status.TURNED_IN;
+                                    default -> StudentSubmissionStatus.Status.UNSUBMITTED;
+                        });
+                });
+
+        assignmentRepository.save(assignment);
+    }
+
+
     private void updateProblemList(Assignment assignment, List<ObjectId> problemIds) {
         if (Objects.isNull(problemIds)) return;
 
