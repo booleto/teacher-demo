@@ -4,5 +4,9 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://${MONGO_HOST:localhost:27017}
-      database: teacherdemo
+      username: ${MONGO_USERNAME:teacherdemoapp}
+      password: ${MONGO_PASSWORD:password}
+      host: ${MONGO_HOST:localhost:27017}
+      database: ${MONGO_DB_NAME:teacherdemo}
+      authentication-database: ${MONGO_AUTH_DATABASE:teacherdemo}
+      uri: mongodb://${spring.data.mongodb.username}:${spring.data.mongodb.password}@${spring.data.mongodb.host}/${spring.data.mongodb.database}?authSource=${spring.data.mongodb.authentication-database}&readPreference=primaryPreferred&directConnection=true
