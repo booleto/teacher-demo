@@ -9,6 +9,8 @@ import com.tophat.teacherdemo.service.AssignmentMetricsService;
 import com.tophat.teacherdemo.service.AssignmentService;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +35,11 @@ public class AssignmentController {
         Optional<AssignmentPublicView> foundAssignment = assignmentService.getAssignmentPublicView(id);
         return foundAssignment.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<Assignment>> searchAssignments(@RequestParam String query, Pageable pageable) {
+        return ResponseEntity.ok(assignmentService.searchAssignment(query, pageable));
     }
 
     @PostMapping

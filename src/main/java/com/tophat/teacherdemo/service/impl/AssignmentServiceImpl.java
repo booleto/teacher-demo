@@ -11,7 +11,8 @@ import com.tophat.teacherdemo.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
-import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -88,8 +89,8 @@ public class AssignmentServiceImpl implements AssignmentService {
     }
 
     @Override
-    public List<Assignment> searchAssignment(Assignment assignment) {
-        return assignmentRepository.findAll(Example.of(assignment));
+    public Page<Assignment> searchAssignment(String query, Pageable pageable) {
+        return assignmentRepository.findAllBy(query, pageable);
     }
 
     @Override

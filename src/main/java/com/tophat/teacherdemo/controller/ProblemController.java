@@ -6,6 +6,9 @@ import com.tophat.teacherdemo.entity.Problem;
 import com.tophat.teacherdemo.service.ProblemService;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +26,11 @@ public class ProblemController {
         Optional<Problem<Answer>> foundAnswer = problemService.findProblemById(id);
         return foundAnswer.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<Problem<Answer>>> searchProblems(@RequestParam String query, @PageableDefault(size = 5) Pageable pageable) {
+        return ResponseEntity.ok(problemService.searchProblem(query, pageable));
     }
 
     @PostMapping
