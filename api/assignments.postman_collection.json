@@ -1,0 +1,301 @@
+{
+	"info": {
+		"_postman_id": "4f308ff0-68cd-464a-906e-f849a5ed5e9a",
+		"name": "assignments",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37757041"
+	},
+	"item": [
+		{
+			"name": "create assignment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"pm.environment.set(\"assignment_id\", data.id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Prayer of loving tests\",\r\n    \"description\": \"O tests, you are better than a well-beloved\",\r\n    \"submissionDeadline\": \"2025-04-14T14:15:52.22Z\",\r\n    \"status\": \"DRAFT\",\r\n    \"metadata\": {\r\n        \"random_attribute\": \"lololo\"\r\n    },\r\n\r\n    \"assignees\": [\r\n        \"6822e59d641d9058f512c67a\", \"6822e5a7641d9058f512c67b\"\r\n    ],\r\n    \"problemIds\": [\r\n        \"6822e578641d9058f512c677\", \"6822e57c641d9058f512c678\", \"6822e581641d9058f512c679\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/assignment",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"assignment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get assignment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"test_assignment\",\r\n    \"description\": \"the test to end all tests\",\r\n    \"submissionDeadline\": \"2025-04-14T14:15:52.22Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/assignment/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"assignment",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{assignment_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get assignment summary",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"test_assignment\",\r\n    \"description\": \"the test to end all tests\",\r\n    \"submissionDeadline\": \"2025-04-14T14:15:52.22Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/assignment/:id/summary",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"assignment",
+						":id",
+						"summary"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{assignment_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update assignment",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"submissionDeadline\": \"2025-06-14T14:15:52.220Z\",\r\n    \"problemIds\": [\r\n        \"681dc036affba115040e6279\", \"681dc039affba115040e627a\", \"681dc03baffba115040e627b\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/assignment/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"assignment",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{assignment_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add assignee",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"studentIds\": [\r\n        \"682178f18495a60d9ca788ce\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/assignment/:id/assign",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"assignment",
+						":id",
+						"assign"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{assignment_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "remove assignee",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"studentIds\": [\r\n        \"682178e78495a60d9ca788cd\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/assignment/:id/unassign",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"assignment",
+						":id",
+						"unassign"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{assignment_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete assignment",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"test_assignment\",\r\n    \"description\": \"the test to end all tests\",\r\n    \"submissionDeadline\": \"2025-04-14T14:15:52.22Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/assignment/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"assignment",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{assignment_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
