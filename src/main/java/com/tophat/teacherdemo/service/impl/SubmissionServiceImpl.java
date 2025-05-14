@@ -114,14 +114,15 @@ public class SubmissionServiceImpl implements SubmissionService {
         Map<ObjectId, Boolean> answerCheckResults = assignment.getProblems().stream()
                 .map(problem -> {
                     Answer studentAnswer = studentAnswers.get(problem.getId());
-                    if (Objects.isNull(studentAnswer)) return null;
+                    if (Objects.isNull(studentAnswer))
+                        return Map.entry(problem.getId(), false);
+
                     Answer correctAnswer = problem.getCorrectAnswer();
                     boolean isStudentCorrect = studentAnswer.equals(correctAnswer);
 
                     if (isStudentCorrect) correctAnswerCount.incrementAndGet();
                     return Map.entry(problem.getId(), isStudentCorrect);
                 })
-                .filter(Objects::nonNull)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         submission.setGrade(correctAnswerCount.get());
