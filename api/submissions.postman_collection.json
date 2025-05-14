@@ -1,0 +1,212 @@
+{
+	"info": {
+		"_postman_id": "785fca98-c48e-4a5f-bdd9-bf5cf3a583aa",
+		"name": "submissions",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37757041"
+	},
+	"item": [
+		{
+			"name": "get submission",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/submit/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"submit",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{submission_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create draft submission",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"pm.environment.set(\"submission_id\", data.submission_id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"studentId\": \"6822e5a7641d9058f512c67b\",\r\n    \"assignmentId\": \"{{assignment_id}}\",\r\n    \"submissionItems\": [\r\n        {\r\n            \"answer\": {\r\n                \"@type\": \"MULTIPLE_CHOICE\",\r\n                \"choice\": 3\r\n            },\r\n            \"problemId\" : \"6822e578641d9058f512c677\"\r\n        },\r\n        {\r\n            \"answer\": {\r\n                \"@type\": \"KEYWORD\",\r\n                \"keyword\": \"orange\"\r\n            },\r\n            \"problemId\" : \"6822e57c641d9058f512c678\"\r\n        }\r\n    ],\r\n    \"metadata\": {}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/submit",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"submit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update submission",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"pm.environment.set(\"submission_id\", data.submission_id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"submissionItems\": [\r\n        {\r\n            \"answer\": {\r\n                \"@type\": \"MULTIPLE_CHOICE\",\r\n                \"choice\": 0,\r\n                \"type\": \"MULTIPLE_CHOICE\"\r\n            },\r\n            \"problemId\": \"681dc036affba115040e6279\"\r\n        },\r\n        {\r\n            \"answer\": {\r\n                \"@type\": \"KEYWORD\",\r\n                \"keyword\": \"apple\",\r\n                \"type\": \"KEYWORD\"\r\n            },\r\n            \"problemId\": \"681dc039affba115040e627a\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/submit/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"submit",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{submission_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete submission",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/submit/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"submit",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{submission_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "turn in draft submission",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/submit/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"submit",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{submission_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

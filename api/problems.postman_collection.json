@@ -1,0 +1,208 @@
+{
+	"info": {
+		"_postman_id": "d9810251-156e-4eb9-83ac-b41423e6aad1",
+		"name": "problems",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37757041"
+	},
+	"item": [
+		{
+			"name": "create multiple choice problem",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Western Literature #3\",\r\n    \"description\": \"Question for midterm\",\r\n    \"questionText\": \"In The Metamorphosis, Franz Kafka, what is the main reason for the protagonist's struggle?\",\r\n    \"type\": \"MULTIPLE_CHOICE\",\r\n    \"choices\": [\r\n        \"Hypercapitalism and the wage gap\",\r\n        \"Global warming\", \r\n        \"The Sisyphian struggle of existence\",\r\n        \"He was transformed into a cockcroach\"\r\n    ],\r\n\r\n    \"correctAnswer\": {\r\n        \"@type\": \"MULTIPLE_CHOICE\",\r\n        \"choice\": 3\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/problem",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"problem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create keyword problem",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Western Literature #2\",\r\n    \"description\": \"Question for midterm\",\r\n    \"questionText\": \"In the first 2 chapters of Demian, Emil Sinclair lied to Kromer about stealing some fruits from a local. What kind of fruit did he lie about stealing?\",\r\n    \"type\": \"KEYWORD\",\r\n    \"choices\": [],\r\n\r\n    \"correctAnswer\": {\r\n        \"@type\": \"KEYWORD\",\r\n        \"keyword\": \"apple\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/problem",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"problem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create sorting problem",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Basic English #1\",\r\n    \"description\": \"Practice question\",\r\n    \"questionText\": \"Order the following words to create a coherent sentence.\",\r\n    \"type\": \"SORTING\",\r\n    \"choices\": [\"chapter\", \"of\", \"fond\", \"quite\", \"I\", \"am\", \"this\"],\r\n\r\n    \"correctAnswer\": {\r\n        \"@type\": \"SORTING\",\r\n        \"orderedAnswers\": [\"I\", \"am\", \"quite\", \"fond\", \"of\", \"this\", \"chapter\"]\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/problem",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"problem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update problem",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type\": \"MULTIPLE_CHOICE\",\r\n    \"choices\": [\"oranges\", \"apples\", \"watermelons\", \"coconuts\"],\r\n    \"correctAnswer\": {\r\n        \"@type\": \"MULTIPLE_CHOICE\",\r\n        \"choice\": 1\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/problem/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"problem",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "681c33c797cae2533ecf79ba"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get problem",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/problem/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"problem",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "681da15300b35325fbce717b"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete problem",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/problem/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"problem",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "681c33c797cae2533ecf79ba"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

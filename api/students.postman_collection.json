@@ -1,0 +1,170 @@
+{
+	"info": {
+		"_postman_id": "4342ecb3-0732-45d0-b161-0ba85ab8350a",
+		"name": "students",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37757041"
+	},
+	"item": [
+		{
+			"name": "get student",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/student/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"student",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "681dda6b98c2ec17884890b9"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get assignment public view",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"test_assignment\",\r\n    \"description\": \"the test to end all tests\",\r\n    \"submissionDeadline\": \"2025-04-14T14:15:52.22Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/assignment/:id/display",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"assignment",
+						":id",
+						"display"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{assignment_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register student",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"nokeurang\",\r\n    \"displayName\": \"yuuri\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/student/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"student",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update student profile",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"motconvit\",\r\n    \"displayName\": \"gamblecore\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/student/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"student",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "681dda6b98c2ec17884890b9"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete student",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/teacherdemo/v0/student/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"teacherdemo",
+						"v0",
+						"student",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "681dda2198c2ec17884890b8"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
