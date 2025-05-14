@@ -2,8 +2,10 @@ package com.tophat.teacherdemo.controller;
 
 import com.tophat.teacherdemo.controller.vo.AssignStudentRequest;
 import com.tophat.teacherdemo.controller.vo.AssignmentCreateRequest;
+import com.tophat.teacherdemo.controller.vo.AssignmentMetricsSummary;
 import com.tophat.teacherdemo.controller.vo.AssignmentPublicView;
 import com.tophat.teacherdemo.entity.Assignment;
+import com.tophat.teacherdemo.service.AssignmentMetricsService;
 import com.tophat.teacherdemo.service.AssignmentService;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
@@ -17,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AssignmentController {
     private final AssignmentService assignmentService;
+    private final AssignmentMetricsService assignmentMetricsService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Assignment> getAssignmentById(@PathVariable ObjectId id) {
@@ -61,6 +64,13 @@ public class AssignmentController {
     public ResponseEntity<Assignment> removeAssignee(@PathVariable ObjectId id, @RequestBody AssignStudentRequest request) {
         Optional<Assignment> updatedAssignment = assignmentService.removeAssignees(id, request.getStudentIds());
         return updatedAssignment.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{id}/summary")
+    public ResponseEntity<AssignmentMetricsSummary> summarizeAssignment(@PathVariable ObjectId id) {
+        Optional<AssignmentMetricsSummary> foundAssignment = assignmentMetricsService.summarize(id);
+        return foundAssignment.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
