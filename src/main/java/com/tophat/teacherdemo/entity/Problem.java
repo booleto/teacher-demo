@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -16,8 +17,11 @@ import java.util.Map;
 public class Problem<T extends Answer> {
     @Id
     private ObjectId id;
+    @TextIndexed
     private String title;
+    @TextIndexed
     private String description;
+    @TextIndexed
     private String questionText;
     private Type type;
     private T correctAnswer;

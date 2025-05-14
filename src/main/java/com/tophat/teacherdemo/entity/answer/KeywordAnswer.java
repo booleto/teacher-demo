@@ -1,16 +1,18 @@
 package com.tophat.teacherdemo.entity.answer;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import static com.tophat.teacherdemo.entity.answer.KeywordAnswer.ALIAS;
+
 @Document
-@TypeAlias("KEYWORD")
+@TypeAlias(ALIAS)
 @Data
 @AllArgsConstructor
 public class KeywordAnswer implements Answer {
+    public static final String ALIAS = "KEYWORD";
     private String keyword;
 
     @Override

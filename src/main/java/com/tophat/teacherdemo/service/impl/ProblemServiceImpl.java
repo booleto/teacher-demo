@@ -7,6 +7,8 @@ import com.tophat.teacherdemo.repository.ProblemRepository;
 import com.tophat.teacherdemo.service.ProblemService;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -27,6 +29,11 @@ public class ProblemServiceImpl implements ProblemService {
     @Override
     public Optional<Problem<Answer>> findProblemById(ObjectId id) {
         return problemRepository.findById(id);
+    }
+
+
+    public Page<Problem<Answer>> searchProblem(String query, Pageable pageable) {
+        return problemRepository.findAllBy(query, pageable);
     }
 
 

@@ -8,11 +8,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static com.tophat.teacherdemo.entity.answer.SortingAnswer.ALIAS;
+
 @Document
-@TypeAlias("SORTING")
+@TypeAlias(ALIAS)
 @Data
 @AllArgsConstructor
 public class SortingAnswer implements Answer {
+    public static final String ALIAS = "SORTING";
     private List<String> orderedAnswers;
 
     @Override
