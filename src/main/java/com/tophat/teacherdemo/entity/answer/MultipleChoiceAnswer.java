@@ -5,13 +5,19 @@ import lombok.Data;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 import static com.tophat.teacherdemo.entity.answer.MultipleChoiceAnswer.ALIAS;
 
 @Document
 @TypeAlias(ALIAS)
 @Data
 @AllArgsConstructor
-public class MultipleChoiceAnswer implements Answer {
+public class MultipleChoiceAnswer implements Answer, Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     public static final String ALIAS = "MULTIPLE_CHOICE";
     private int choice;
 

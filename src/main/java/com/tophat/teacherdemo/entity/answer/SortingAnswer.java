@@ -5,6 +5,8 @@ import lombok.Data;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -14,7 +16,10 @@ import static com.tophat.teacherdemo.entity.answer.SortingAnswer.ALIAS;
 @TypeAlias(ALIAS)
 @Data
 @AllArgsConstructor
-public class SortingAnswer implements Answer {
+public class SortingAnswer implements Answer, Serializable {
+    @Serial
+    private static final long serialVersionUID = 2L;
+
     public static final String ALIAS = "SORTING";
     private List<String> orderedAnswers;
 

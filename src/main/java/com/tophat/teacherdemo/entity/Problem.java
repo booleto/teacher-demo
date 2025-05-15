@@ -8,13 +8,18 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 @Document("Problem")
 @Data
 @Builder
-public class Problem<T extends Answer> {
+public class Problem<T extends Answer> implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -1707L;
+
     @Id
     private ObjectId id;
     @TextIndexed

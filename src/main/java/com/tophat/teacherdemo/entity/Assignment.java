@@ -11,6 +11,8 @@ import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +22,10 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @Data
-public class Assignment {
+public class Assignment implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -100L;
+
     @Id
     private ObjectId id;
     @TextIndexed
