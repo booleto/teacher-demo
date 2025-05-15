@@ -7,6 +7,9 @@ import com.tophat.teacherdemo.repository.ProblemRepository;
 import com.tophat.teacherdemo.service.ProblemService;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,6 +30,7 @@ public class ProblemServiceImpl implements ProblemService {
 
 
     @Override
+    @Cacheable(value = "problem-cache", key = "#id", unless = "#result == null")
     public Optional<Problem<Answer>> findProblemById(ObjectId id) {
         return problemRepository.findById(id);
     }
@@ -38,6 +42,7 @@ public class ProblemServiceImpl implements ProblemService {
 
 
     @Override
+    @CachePut(value = "problem-cache", key = "#result.id", unless = "#result == null")
     public Problem<Answer> createProblem(ProblemCreateRequest problemRequest) {
         Problem<Answer> problem = Problem.builder()
                 .title(problemRequest.getTitle())
@@ -53,6 +58,7 @@ public class ProblemServiceImpl implements ProblemService {
 
 
     @Override
+    @CachePut(value = "problem-cache", key = "#id", unless = "#result == null")
     public Optional<Problem<Answer>> updateProblem(ObjectId id, ProblemCreateRequest problemRequest) {
         Optional<Problem<Answer>> problemSearch = problemRepository.findById(id);
         if (problemSearch.isEmpty()) return Optional.empty();
@@ -86,6 +92,7 @@ public class ProblemServiceImpl implements ProblemService {
 
 
     @Override
+    @CacheEvict(value = "problem-cache", key = "#id")
     public void deleteProblem(ObjectId id) {
         problemRepository.deleteById(id);
     }

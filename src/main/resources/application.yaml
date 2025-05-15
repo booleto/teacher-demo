@@ -10,3 +10,13 @@ spring:
       database: ${MONGO_DB_NAME:teacherdemo}
       authentication-database: ${MONGO_AUTH_DATABASE:teacherdemo}
       uri: mongodb://${spring.data.mongodb.username}:${spring.data.mongodb.password}@${spring.data.mongodb.host}/${spring.data.mongodb.database}?authSource=${spring.data.mongodb.authentication-database}&readPreference=primaryPreferred&directConnection=true
+
+    redis:
+      host: localhost
+      port: 6379
+
+  cache:
+    cache-names: "problem-cache,student-cache,assignment-cache,assignment-view-cache"
+    redis:
+      key-prefix: ${CACHE_KEY_PREFIX:TEACHERDEMO::}
+      time-to-live: ${CACHE_TTL:10m}

@@ -11,6 +11,10 @@ import com.tophat.teacherdemo.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,11 +33,13 @@ public class AssignmentServiceImpl implements AssignmentService {
     private final StudentService studentService;
 
     @Override
+    @Cacheable(value = "assignment-cache", key = "#id", unless = "#result == null")
     public Optional<Assignment> getAssignment(ObjectId id) {
         return assignmentRepository.findById(id);
     }
 
     @Override
+    @Cacheable(value = "assignment-view-cache", key = "#id", unless = "#result == null")
     public Optional<AssignmentPublicView> getAssignmentPublicView(ObjectId id) {
         Optional<Assignment> assignmentSearch = assignmentRepository.findById(id);
         if (assignmentSearch.isEmpty()) return Optional.empty();
@@ -51,6 +57,7 @@ public class AssignmentServiceImpl implements AssignmentService {
     }
 
     @Override
+    @CachePut(value = "assignment-cache", key = "#result.id", unless = "#result == null")
     public Assignment createAssignment(AssignmentCreateRequest assignmentRequest) {
         Assignment assignment = Assignment.builder()
                 .title(assignmentRequest.getTitle())
@@ -94,6 +101,8 @@ public class AssignmentServiceImpl implements AssignmentService {
     }
 
     @Override
+    @CachePut(value = "assignment-cache", key = "#id", unless = "#result == null")
+    @CacheEvict(value = "assignment-view-cache", key = "#id")
     public Optional<Assignment> updateAssignment(ObjectId id, AssignmentCreateRequest assignmentRequest) {
         Optional<Assignment> assignmentSearch = assignmentRepository.findById(id);
         if (assignmentSearch.isEmpty()) return Optional.empty();
@@ -117,6 +126,10 @@ public class AssignmentServiceImpl implements AssignmentService {
 
     @Override
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "assignment-cache", key = "#id"),
+            @CacheEvict(value = "assignment-view-cache", key = "#id")
+    })
     public void deleteAssignment(ObjectId id) {
         Optional<Assignment> assignmentSearch = assignmentRepository.findById(id);
         if (assignmentSearch.isEmpty()) return;
@@ -132,6 +145,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 
 
     @Transactional
+    @CachePut(value = "assignment-cache", key = "#assignmentId", unless = "#result == null")
     public Optional<Assignment> addAssignees(ObjectId assignmentId, List<ObjectId> studentIds) {
         Optional<Assignment> foundAssignment = getAssignment(assignmentId);
         if (foundAssignment.isEmpty()) return Optional.empty();
@@ -162,6 +176,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 
 
     @Transactional
+    @CachePut(value = "assignment-cache", key = "#assignmentId", unless = "#result == null")
     public Optional<Assignment> removeAssignees(ObjectId assignmentId, List<ObjectId> studentIds) {
         Optional<Assignment> foundAssignment = getAssignment(assignmentId);
         if (foundAssignment.isEmpty()) return Optional.empty();
@@ -176,6 +191,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 
 
     @Transactional
+    @CacheEvict(value = "assignment-cache", key = "#submission.assignmentId")
     public void syncSubmissionStatus(Submission submission) {
         Optional<Assignment> foundAssignment = getAssignment(submission.getAssignmentId());
         if (foundAssignment.isEmpty()) throw new IllegalArgumentException(String.format("Assignment with id %s not found" , submission.getAssignmentId()));

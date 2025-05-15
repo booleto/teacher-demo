@@ -20,6 +20,15 @@ services:
     networks:
       - internal-network-1
 
+  # Redis
+  redis:
+    image: redis:8.0.1
+    container_name: redis-test
+    ports:
+      - "6379:6379"
+    networks:
+      - internal-network-1
+
 networks:
   internal-network-1:
     driver: bridge
