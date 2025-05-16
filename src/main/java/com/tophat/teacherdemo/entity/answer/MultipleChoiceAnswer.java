@@ -10,6 +10,9 @@ import java.io.Serializable;
 
 import static com.tophat.teacherdemo.entity.answer.MultipleChoiceAnswer.ALIAS;
 
+/**
+ * An {@link Answer} that indicates a choice for a multiple choice question.
+ */
 @Document
 @TypeAlias(ALIAS)
 @Data
