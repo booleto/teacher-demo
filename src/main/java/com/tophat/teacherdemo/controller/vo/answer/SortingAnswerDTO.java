@@ -9,9 +9,16 @@ import lombok.Data;
 import java.util.List;
 import java.util.Objects;
 
-@JsonTypeName("SORTING")
+import static com.tophat.teacherdemo.controller.vo.answer.SortingAnswerDTO.JSON_TYPE;
+
+/**
+ * A DTO that describes a {@link SortingAnswer} entity.
+ * Intended to be a representation of API input.
+ */
+@JsonTypeName(JSON_TYPE)
 @Data
 public class SortingAnswerDTO implements AnswerDTO {
+    public static final String JSON_TYPE = "SORTING";
     private List<String> orderedAnswers;
 
     @Override

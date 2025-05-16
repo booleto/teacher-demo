@@ -12,6 +12,9 @@ import java.util.stream.IntStream;
 
 import static com.tophat.teacherdemo.entity.answer.SortingAnswer.ALIAS;
 
+/**
+ * An {@link Answer} to a question that requires sorting the given choices.
+ */
 @Document
 @TypeAlias(ALIAS)
 @Data

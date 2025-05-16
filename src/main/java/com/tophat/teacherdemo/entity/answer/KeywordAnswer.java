@@ -10,6 +10,9 @@ import java.io.Serializable;
 
 import static com.tophat.teacherdemo.entity.answer.KeywordAnswer.ALIAS;
 
+/**
+ * An {@link Answer} that contains a manually typed keyword.
+ */
 @Document
 @TypeAlias(ALIAS)
 @Data

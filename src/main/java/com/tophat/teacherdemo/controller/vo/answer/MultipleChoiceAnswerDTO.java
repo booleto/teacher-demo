@@ -8,9 +8,16 @@ import lombok.Data;
 
 import java.util.Objects;
 
-@JsonTypeName("MULTIPLE_CHOICE")
+import static com.tophat.teacherdemo.controller.vo.answer.MultipleChoiceAnswerDTO.JSON_TYPE;
+
+/**
+ * A DTO that describes a {@link MultipleChoiceAnswer} entity.
+ * Intended to be a representation of API input.
+ */
+@JsonTypeName(JSON_TYPE)
 @Data
 public class MultipleChoiceAnswerDTO implements AnswerDTO {
+    public static final String JSON_TYPE = "MULTIPLE_CHOICE";
     private Integer choice;
 
     @Override
