@@ -6,6 +6,7 @@ import com.tophat.teacherdemo.entity.answer.Answer;
 import com.tophat.teacherdemo.entity.answer.MultipleChoiceAnswer;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 import static com.tophat.teacherdemo.controller.vo.answer.MultipleChoiceAnswerDTO.JSON_TYPE;
@@ -18,6 +19,8 @@ import static com.tophat.teacherdemo.controller.vo.answer.MultipleChoiceAnswerDT
 @Data
 public class MultipleChoiceAnswerDTO implements AnswerDTO {
     public static final String JSON_TYPE = "MULTIPLE_CHOICE";
+
+    @NotNull(message = "field 'choice' is required in MULTIPLE_CHOICE type answer")
     private Integer choice;
 
     @Override

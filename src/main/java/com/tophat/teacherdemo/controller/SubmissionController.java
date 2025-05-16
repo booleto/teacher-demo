@@ -10,6 +10,7 @@ import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -27,12 +28,12 @@ public class SubmissionController {
     }
 
     @PostMapping
-    public ResponseEntity<Submission> createDraftSubmission(@RequestBody SubmissionRequest submissionRequest) {
+    public ResponseEntity<Submission> createDraftSubmission(@RequestBody @Valid SubmissionRequest submissionRequest) {
         return ResponseEntity.ok(submissionService.createDraftSubmission(submissionRequest));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Submission> updateDraftSubmission(@RequestBody SubmissionRequest submissionRequest, @PathVariable ObjectId id) {
+    public ResponseEntity<Submission> updateDraftSubmission(@RequestBody @Valid SubmissionRequest submissionRequest, @PathVariable ObjectId id) {
         Optional<Submission> updatedSubmission = submissionService.updateDraftSubmission(id, submissionRequest);
         return updatedSubmission.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());

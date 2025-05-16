@@ -14,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
 import java.util.Optional;
 
 @RestController
@@ -38,17 +40,18 @@ public class AssignmentController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Assignment>> searchAssignments(@RequestParam String query, Pageable pageable) {
+    public ResponseEntity<Page<Assignment>> searchAssignments(@RequestParam @Pattern(regexp = "^[\\w\\s.,!?()]+$", message = "query must not contain special characters") String query,
+                                                              Pageable pageable) {
         return ResponseEntity.ok(assignmentService.searchAssignment(query, pageable));
     }
 
     @PostMapping
-    public ResponseEntity<Assignment> createAssignment(@RequestBody AssignmentCreateRequest assignment) {
+    public ResponseEntity<Assignment> createAssignment(@RequestBody @Valid AssignmentCreateRequest assignment) {
         return ResponseEntity.ok(assignmentService.createAssignment(assignment));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Assignment> updateAssignment(@RequestBody AssignmentCreateRequest assignment, @PathVariable ObjectId id) {
+    public ResponseEntity<Assignment> updateAssignment(@RequestBody @Valid AssignmentCreateRequest assignment, @PathVariable ObjectId id) {
         Optional<Assignment> updatedAssignment = assignmentService.updateAssignment(id, assignment);
         return updatedAssignment.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -61,14 +64,14 @@ public class AssignmentController {
     }
 
     @PatchMapping("/{id}/assign")
-    public ResponseEntity<Assignment> addAssignees(@PathVariable ObjectId id, @RequestBody AssignStudentRequest request) {
+    public ResponseEntity<Assignment> addAssignees(@PathVariable ObjectId id, @RequestBody @Valid AssignStudentRequest request) {
         Optional<Assignment> updatedAssignment = assignmentService.addAssignees(id, request.getStudentIds());
         return updatedAssignment.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PatchMapping("/{id}/unassign")
-    public ResponseEntity<Assignment> removeAssignee(@PathVariable ObjectId id, @RequestBody AssignStudentRequest request) {
+    public ResponseEntity<Assignment> removeAssignee(@PathVariable ObjectId id, @RequestBody @Valid AssignStudentRequest request) {
         Optional<Assignment> updatedAssignment = assignmentService.removeAssignees(id, request.getStudentIds());
         return updatedAssignment.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());

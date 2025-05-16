@@ -7,6 +7,8 @@ import com.tophat.teacherdemo.entity.answer.KeywordAnswer;
 import lombok.Data;
 import org.apache.logging.log4j.util.Strings;
 
+import javax.validation.constraints.NotNull;
+
 import static com.tophat.teacherdemo.controller.vo.answer.KeywordAnswerDTO.JSON_TYPE;
 
 /**
@@ -17,6 +19,8 @@ import static com.tophat.teacherdemo.controller.vo.answer.KeywordAnswerDTO.JSON_
 @Data
 public class KeywordAnswerDTO implements AnswerDTO {
     public static final String JSON_TYPE = "KEYWORD";
+
+    @NotNull(message = "field 'keyword' is required in KEYWORD type answer")
     private String keyword;
 
     @Override

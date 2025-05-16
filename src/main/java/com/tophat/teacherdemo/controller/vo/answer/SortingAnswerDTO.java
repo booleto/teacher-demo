@@ -6,6 +6,7 @@ import com.tophat.teacherdemo.entity.answer.Answer;
 import com.tophat.teacherdemo.entity.answer.SortingAnswer;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,6 +20,8 @@ import static com.tophat.teacherdemo.controller.vo.answer.SortingAnswerDTO.JSON_
 @Data
 public class SortingAnswerDTO implements AnswerDTO {
     public static final String JSON_TYPE = "SORTING";
+
+    @NotNull(message = "field 'orderedAnswers' is required in SORTING type answer")
     private List<String> orderedAnswers;
 
     @Override

@@ -8,6 +8,7 @@ import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -17,7 +18,7 @@ public class StudentController {
     private final StudentService studentService;
 
     @PostMapping("/register")
-    public ResponseEntity<Student> register(@RequestBody StudentCreateRequest student) {
+    public ResponseEntity<Student> register(@RequestBody @Valid StudentCreateRequest student) {
         return ResponseEntity.ok(studentService.createStudent(student));
     }
 
@@ -29,7 +30,7 @@ public class StudentController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Student> updateStudentProfile(@PathVariable ObjectId id, StudentCreateRequest student) {
+    public ResponseEntity<Student> updateStudentProfile(@PathVariable ObjectId id, @RequestBody @Valid StudentCreateRequest student) {
         Optional<Student> updatedStudent = studentService.updateStudent(id, student);
         return updatedStudent.map(ResponseEntity::ok)
             .orElseGet(() -> ResponseEntity.notFound().build());

@@ -12,6 +12,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
 import java.util.Optional;
 
 @RestController
@@ -29,17 +31,18 @@ public class ProblemController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Problem<Answer>>> searchProblems(@RequestParam String query, @PageableDefault(size = 5) Pageable pageable) {
+    public ResponseEntity<Page<Problem<Answer>>> searchProblems(@RequestParam @Pattern(regexp = "^[\\w\\s.,!?()]+$", message = "query must not contain special characters") String query,
+                                                                @PageableDefault(size = 5) Pageable pageable) {
         return ResponseEntity.ok(problemService.searchProblem(query, pageable));
     }
 
     @PostMapping
-    public ResponseEntity<Problem<Answer>> createProblem(@RequestBody ProblemCreateRequest problemReq) {
+    public ResponseEntity<Problem<Answer>> createProblem(@RequestBody @Valid ProblemCreateRequest problemReq) {
         return ResponseEntity.ok(problemService.createProblem(problemReq));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Problem<Answer>> updateProblem(@RequestBody ProblemCreateRequest problemReq, @PathVariable ObjectId id) {
+    public ResponseEntity<Problem<Answer>> updateProblem(@RequestBody @Valid ProblemCreateRequest problemReq, @PathVariable ObjectId id) {
         Optional<Problem<Answer>> updatedAnswer = problemService.updateProblem(id, problemReq);
         return updatedAnswer.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
