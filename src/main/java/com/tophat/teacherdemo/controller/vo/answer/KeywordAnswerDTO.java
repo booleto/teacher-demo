@@ -4,8 +4,12 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.tophat.teacherdemo.entity.Problem;
 import com.tophat.teacherdemo.entity.answer.Answer;
 import com.tophat.teacherdemo.entity.answer.KeywordAnswer;
+import com.tophat.teacherdemo.exception.InvalidAnswerException;
 import lombok.Data;
-import org.apache.logging.log4j.util.Strings;
+
+import jakarta.validation.constraints.NotNull;
+
+import java.util.Objects;
 
 import static com.tophat.teacherdemo.controller.vo.answer.KeywordAnswerDTO.JSON_TYPE;
 
@@ -17,12 +21,14 @@ import static com.tophat.teacherdemo.controller.vo.answer.KeywordAnswerDTO.JSON_
 @Data
 public class KeywordAnswerDTO implements AnswerDTO {
     public static final String JSON_TYPE = "KEYWORD";
+
+    @NotNull(message = "field 'keyword' is required in KEYWORD type answer")
     private String keyword;
 
     @Override
     public Answer toAnswer() {
-        if (Strings.isEmpty(keyword)) {
-            throw new IllegalStateException("Keyword answer data not found");
+        if (Objects.isNull(keyword)) {
+            throw new InvalidAnswerException("Keyword answer data not found");
         }
 
         return new KeywordAnswer(keyword);

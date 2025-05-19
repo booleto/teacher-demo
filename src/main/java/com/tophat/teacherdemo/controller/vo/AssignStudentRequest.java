@@ -5,11 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class AssignStudentRequest {
+    @NotNull(message = "studentIds must not be null")
     private List<ObjectId> studentIds;
 }

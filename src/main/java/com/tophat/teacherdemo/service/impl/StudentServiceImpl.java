@@ -4,6 +4,7 @@ import com.tophat.teacherdemo.controller.vo.StudentCreateRequest;
 import com.tophat.teacherdemo.entity.Assignment;
 import com.tophat.teacherdemo.entity.Student;
 import com.tophat.teacherdemo.entity.StudentPendingAssignment;
+import com.tophat.teacherdemo.exception.ResourceNotFoundException;
 import com.tophat.teacherdemo.repository.StudentRepository;
 import com.tophat.teacherdemo.service.StudentService;
 import lombok.RequiredArgsConstructor;
@@ -78,7 +79,7 @@ public class StudentServiceImpl implements StudentService {
         studentIds.parallelStream().forEach(studentId -> {
             Optional<Student> studentSearch = findStudentById(studentId);
             if (studentSearch.isEmpty())
-                throw new IllegalArgumentException(String.format("Student with id %s not found", studentId));
+                throw new ResourceNotFoundException(String.format("Student with id %s not found", studentId));
         });
     }
 }
