@@ -3,6 +3,7 @@ package com.tophat.teacherdemo.service.impl;
 import com.tophat.teacherdemo.controller.vo.ProblemCreateRequest;
 import com.tophat.teacherdemo.entity.*;
 import com.tophat.teacherdemo.entity.answer.Answer;
+import com.tophat.teacherdemo.exception.ResourceNotFoundException;
 import com.tophat.teacherdemo.repository.ProblemRepository;
 import com.tophat.teacherdemo.service.ProblemService;
 import lombok.RequiredArgsConstructor;
@@ -80,7 +81,7 @@ public class ProblemServiceImpl implements ProblemService {
         // Change question type
         Optional.ofNullable(problemRequest.getType()).ifPresent(type -> {
             if (Objects.isNull(problemRequest.getCorrectAnswer())) {
-                throw new IllegalArgumentException("Changing Problem Type, but new Correct answer not found");
+                throw new ResourceNotFoundException("Changing Problem Type, but new Correct answer not found");
             }
 
             Answer correctAnswer = problemRequest.getCorrectAnswer().toAnswer();

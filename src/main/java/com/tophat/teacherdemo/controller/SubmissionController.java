@@ -4,17 +4,20 @@ import com.tophat.teacherdemo.controller.vo.SubmissionRequest;
 import com.tophat.teacherdemo.entity.Problem;
 import com.tophat.teacherdemo.entity.Submission;
 import com.tophat.teacherdemo.entity.answer.Answer;
+import com.tophat.teacherdemo.exception.ResourceNotFoundException;
 import com.tophat.teacherdemo.service.SubmissionService;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/teacherdemo/v0/submit")
+@Validated
 @RequiredArgsConstructor
 public class SubmissionController {
     private final SubmissionService submissionService;
@@ -24,7 +27,9 @@ public class SubmissionController {
     public ResponseEntity<Submission> getSubmission(@PathVariable ObjectId id) {
         Optional<Submission> foundSubmission = submissionService.getSubmissionById(id);
         return foundSubmission.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        String.format("Submission %s not found", id.toString())
+                ));
     }
 
     @PostMapping
@@ -36,7 +41,9 @@ public class SubmissionController {
     public ResponseEntity<Submission> updateDraftSubmission(@RequestBody @Valid SubmissionRequest submissionRequest, @PathVariable ObjectId id) {
         Optional<Submission> updatedSubmission = submissionService.updateDraftSubmission(id, submissionRequest);
         return updatedSubmission.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        String.format("Submission %s not found", id.toString())
+                ));
     }
 
     @DeleteMapping("/{id}")
@@ -49,6 +56,8 @@ public class SubmissionController {
     public ResponseEntity<Submission> turnInSubmission(@PathVariable ObjectId id) {
         Optional<Submission> turnedIn = submissionService.turnInSubmission(id);
         return turnedIn.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        String.format("Submission %s not found", id.toString())
+                ));
     }
 }

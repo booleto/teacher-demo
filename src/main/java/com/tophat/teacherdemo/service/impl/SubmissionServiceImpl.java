@@ -6,6 +6,8 @@ import com.tophat.teacherdemo.entity.Assignment;
 import com.tophat.teacherdemo.entity.Submission;
 import com.tophat.teacherdemo.entity.SubmissionItem;
 import com.tophat.teacherdemo.entity.answer.Answer;
+import com.tophat.teacherdemo.exception.InvalidSubmissionStateException;
+import com.tophat.teacherdemo.exception.ResourceNotFoundException;
 import com.tophat.teacherdemo.repository.SubmissionRepository;
 import com.tophat.teacherdemo.service.AssignmentService;
 import com.tophat.teacherdemo.service.StudentService;
@@ -58,7 +60,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         Submission submission = submissionSearch.get();
 
         if (!submission.getStatus().equals(Submission.Status.DRAFT)) {
-            throw new IllegalArgumentException("Submission status is not DRAFT, editing is not allowed");
+            throw new InvalidSubmissionStateException("Submission status is not DRAFT, editing is not allowed", submission.getStatus().name());
         }
 
         Optional.ofNullable(submitRequest.getMetadata()).ifPresent(submission::setMetadata);
@@ -84,7 +86,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         Submission submission = submissionSearch.get();
 
         if (!submission.getStatus().equals(Submission.Status.DRAFT)) {
-            throw new IllegalArgumentException("Submission status is not DRAFT, cannot turn in");
+            throw new InvalidSubmissionStateException("Submission status is not DRAFT, cannot turn in", submission.getStatus().name());
         }
 
         submission.setStatus(Submission.Status.TURNED_IN);
@@ -101,7 +103,7 @@ public class SubmissionServiceImpl implements SubmissionService {
     private void gradeSubmission(Submission submission) {
         Optional<Assignment> foundAssignment = assignmentService.getAssignment(submission.getAssignmentId());
         if (foundAssignment.isEmpty())
-            throw new IllegalArgumentException(String.format("AssignmentId %s not found", submission.getAssignmentId()));
+            throw new ResourceNotFoundException(String.format("AssignmentId %s not found", submission.getAssignmentId()));
         Assignment assignment = foundAssignment.get();
 
         Map<ObjectId, Answer> studentAnswers = submission.getSubmissionItems().stream()

@@ -5,7 +5,7 @@ import com.tophat.teacherdemo.entity.SubmissionItem;
 import lombok.Data;
 import org.bson.types.ObjectId;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 @Data
 public class SubmissionItemDTO {

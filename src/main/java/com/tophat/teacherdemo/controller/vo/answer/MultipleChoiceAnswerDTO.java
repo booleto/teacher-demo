@@ -4,9 +4,10 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.tophat.teacherdemo.entity.Problem;
 import com.tophat.teacherdemo.entity.answer.Answer;
 import com.tophat.teacherdemo.entity.answer.MultipleChoiceAnswer;
+import com.tophat.teacherdemo.exception.InvalidAnswerException;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.util.Objects;
 
 import static com.tophat.teacherdemo.controller.vo.answer.MultipleChoiceAnswerDTO.JSON_TYPE;
@@ -26,7 +27,7 @@ public class MultipleChoiceAnswerDTO implements AnswerDTO {
     @Override
     public Answer toAnswer() {
         if (Objects.isNull(choice)) {
-            throw new IllegalStateException("Multiple choice answer data not found");
+            throw new InvalidAnswerException("Multiple choice answer data not found");
         }
 
         return new MultipleChoiceAnswer(choice);

@@ -4,6 +4,7 @@ import com.tophat.teacherdemo.controller.vo.AssignmentCreateRequest;
 import com.tophat.teacherdemo.controller.vo.AssignmentPublicView;
 import com.tophat.teacherdemo.entity.*;
 import com.tophat.teacherdemo.entity.answer.Answer;
+import com.tophat.teacherdemo.exception.ResourceNotFoundException;
 import com.tophat.teacherdemo.repository.AssignmentRepository;
 import com.tophat.teacherdemo.repository.ProblemRepository;
 import com.tophat.teacherdemo.service.AssignmentService;
@@ -75,7 +76,7 @@ public class AssignmentServiceImpl implements AssignmentService {
                 .map(studentId -> {
                     Optional<Student> student = studentService.findStudentById(studentId);
                     if (student.isEmpty())
-                        throw new IllegalArgumentException(String.format("Student with id %s not found" , studentId));
+                        throw new ResourceNotFoundException(String.format("Student with id %s not found" , studentId));
                     return student.get();
                 })
                 .map(student -> StudentSubmissionStatus.builder()
@@ -160,7 +161,7 @@ public class AssignmentServiceImpl implements AssignmentService {
                 .filter(Predicate.not(assignedStudents::contains))
                 .map(id -> {
                     Optional<Student> student = studentService.findStudentById(id);
-                    if (student.isEmpty()) throw new IllegalArgumentException(String.format("Student with id %s not found" , id));
+                    if (student.isEmpty()) throw new ResourceNotFoundException(String.format("Student with id %s not found" , id));
                     return student.get();
                 }).map(student -> StudentSubmissionStatus.builder()
                         .displayName(student.getDisplayName())
@@ -194,7 +195,7 @@ public class AssignmentServiceImpl implements AssignmentService {
     @CacheEvict(value = "assignment-cache", key = "#submission.assignmentId")
     public void syncSubmissionStatus(Submission submission) {
         Optional<Assignment> foundAssignment = getAssignment(submission.getAssignmentId());
-        if (foundAssignment.isEmpty()) throw new IllegalArgumentException(String.format("Assignment with id %s not found" , submission.getAssignmentId()));
+        if (foundAssignment.isEmpty()) throw new ResourceNotFoundException(String.format("Assignment with id %s not found" , submission.getAssignmentId()));
         Assignment assignment = foundAssignment.get();
 
         assignment.getSubmissionStatus().stream()
@@ -225,7 +226,7 @@ public class AssignmentServiceImpl implements AssignmentService {
                 .toList();
 
         if (!notFoundIds.isEmpty()) {
-            throw new IllegalArgumentException(String.format("Problem with id %s not found", notFoundIds));
+            throw new ResourceNotFoundException(String.format("Problem with id %s not found", notFoundIds));
         }
 
         assignment.setProblems(foundProblems);

@@ -4,9 +4,10 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.tophat.teacherdemo.entity.Problem;
 import com.tophat.teacherdemo.entity.answer.Answer;
 import com.tophat.teacherdemo.entity.answer.SortingAnswer;
+import com.tophat.teacherdemo.exception.InvalidAnswerException;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,7 +28,7 @@ public class SortingAnswerDTO implements AnswerDTO {
     @Override
     public Answer toAnswer() {
         if (Objects.isNull(orderedAnswers)) {
-            throw new IllegalStateException("Sorting answer data not found");
+            throw new InvalidAnswerException("Sorting answer data not found");
         }
 
         return new SortingAnswer(orderedAnswers);

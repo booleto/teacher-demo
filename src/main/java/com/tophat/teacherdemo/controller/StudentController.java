@@ -2,17 +2,20 @@ package com.tophat.teacherdemo.controller;
 
 import com.tophat.teacherdemo.controller.vo.StudentCreateRequest;
 import com.tophat.teacherdemo.entity.Student;
+import com.tophat.teacherdemo.exception.ResourceNotFoundException;
 import com.tophat.teacherdemo.service.StudentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/teacherdemo/v0/student")
+@Validated
 @RequiredArgsConstructor
 public class StudentController {
     private final StudentService studentService;
@@ -26,14 +29,18 @@ public class StudentController {
     public ResponseEntity<Student> getStudent(@PathVariable ObjectId id) {
         Optional<Student> foundStudent = studentService.findStudentById(id);
         return foundStudent.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        String.format("Student %s not found", id.toString())
+                ));
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<Student> updateStudentProfile(@PathVariable ObjectId id, @RequestBody @Valid StudentCreateRequest student) {
         Optional<Student> updatedStudent = studentService.updateStudent(id, student);
         return updatedStudent.map(ResponseEntity::ok)
-            .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        String.format("Student %s not found", id.toString())
+                ));
     }
 
     @DeleteMapping("/{id}")
